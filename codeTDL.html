@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List – Authentification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="page.css">
+</head>
+<body>
+
+    <!-- ===================== PAGE AUTHENTIFICATION ===================== -->
+    <div id="authPage" class="auth-page">
+        <div class="auth-bg-shape"></div>
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo"></div>
+                <h1>My<span>App</span></h1>
+                <p class="auth-subtitle">Gérez vos tâche plus simplement</p>
+            </div>
+
+            <!-- Onglets -->
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Se connecter</button>
+                <button class="tab-btn" onclick="switchTab('register')">S'inscrire</button>
+            </div>
+
+            <!-- Formulaire Connexion -->
+            <div id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label>Adresse email</label>
+                    <input type="email" id="loginEmail" placeholder="exemple@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••">
+                </div>
+                <p id="loginError" class="error-msg"></p>
+                <button class="btn-primary" onclick="login()">Se connecter →</button>
+            </div>
+
+            <!-- Formulaire Inscription -->
+            <div id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" id="registerName" placeholder="Ali Ben Youssef">
+                </div>
+                <div class="form-group">
+                    <label>Adresse email</label>
+                    <input type="email" id="registerEmail" placeholder="exemple@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="registerPassword" placeholder="*********">
+                </div>
+                <p id="registerError" class="error-msg"></p>
+                <p id="registerSuccess" class="success-msg"></p>
+                <button class="btn-primary" onclick="register()">Créer mon compte →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== PAGE TODO LIST ===================== -->
+    <div id="appPage" class="app-page hidden">
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div>
+                    <h2 id="welcomeMsg">Bonjour !</h2>
+                    <div class="app-logo">♂</div>
+                    <span class="header-date" id="currentDate"></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon" id="darkModeBtn" onclick="toggleDarkMode()" title="Mode sombre">🌙</button>
+                <button class="btn-logout" onclick="logout()">Déconnexion</button>
+            </div>
+        </header>
+
+        <main class="app-main">
+
+            <!-- Historique des actions (Bonus 2) -->
+            <div class="history-bar" id="historyBar">
+                <span id="lastAdded">➕ Aucune tâche ajoutée</span>
+                <span id="lastDeleted">🗑️ Aucune tâche supprimée</span>
+            </div>
+
+            <!-- Statistiques -->
+            <div class="stats-grid">
+                <div class="stat-card stat-total">
+                    <span class="stat-number" id="taskCount">0</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="stat-card stat-done">
+                    <span class="stat-number" id="taskDone">0</span>
+                    <span class="stat-label">Terminées</span>
+                </div>
+                <div class="stat-card stat-remaining">
+                    <span class="stat-number" id="taskRemaining">0</span>
+                    <span class="stat-label">Restantes</span>
+                </div>
+            </div>
+
+            <!-- Ajout de tâche -->
+            <div class="add-card">
+                <h3>Nouvelle tâche</h3>
+                <div class="add-row">
+                    <input type="text" id="taskName" placeholder="Titre de la tâche...">
+                    <select id="taskPriority">
+                        <option value="">Priorité</option>
+                        <option value="Haute">🔴 Haute</option>
+                        <option value="Moyenne">🟡 Moyenne</option>
+                        <option value="Basse">🟢 Basse</option>
+                    </select>
+                </div>
+                <div class="add-row">
+                    <input type="text" id="taskDesc" placeholder="Description (optionnelle)...">
+                    <button onclick="addTask()">+ Ajouter</button>
+                </div>
+            </div>
+
+            <!-- Recherche dynamique (Bonus 3) -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Rechercher par titre ou mot-clé..." oninput="displayTasks()">
+                <select id="filterStatus" onchange="displayTasks()">
+                    <option value="all">Tous les statuts</option>
+                    <option value="done">✅ Terminées</option>
+                    <option value="pending">⏳ En cours</option>
+                </select>
+            </div>
+
+            <!-- Liste des tâches -->
+            <ul id="taskList" class="task-list"></ul>
+            <p id="emptyMsg" class="empty-msg hidden">Aucune tâche trouvée. Ajoutez-en une !</p>
+
+        </main>
+    </div>
+
+    <script src="page.js"></script>
+</body>
+</html>
